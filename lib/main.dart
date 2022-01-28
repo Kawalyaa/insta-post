@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_post/insta_post_theme.dart';
 
 void main() {
   runApp(const InstaPost());
@@ -9,11 +10,11 @@ class InstaPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = InstaPostTheme.light();
+
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: theme,
       home: const Home(),
     );
   }
