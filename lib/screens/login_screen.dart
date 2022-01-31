@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:insta_post/network/insta_service.dart';
 
 import '../insta_post_theme.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -10,6 +13,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  InstaService instaService = InstaService();
+  FlutterWebviewPlugin flutterWeb = FlutterWebviewPlugin();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +51,27 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 20,
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        flutterWeb.launch(uri);
+                        flutterWeb.onUrlChanged.listen((uri) async {
+                          if (authUrl.contains(redirectUri)) {
+                            instaService.getAuth(uri);
+                            instaService.getToken().then((token) async {
+                              if (token != '') {
+                                await flutterWeb.close();
+                                await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen(
+                                              token: instaService.accessToken,
+                                            )));
+                              }
+                            });
+                          } else {}
+                        });
+
+                        //await instaService.instaWebView(flutterWeb);
+                      },
                       child: Image.asset(
                         'assets/instagram.png',
                         width: 100.0,
