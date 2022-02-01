@@ -28,6 +28,7 @@ class InstaService {
   String? accessToken;
   bool? hasCode;
   List<Posts> postsList = [];
+  List<Posts> finalList = [];
 
   void getAuth(String url) {
     //Convert auth code to string
@@ -56,13 +57,27 @@ class InstaService {
     await prefs.setString('token', accessToken!);
   }
 
-  Future<List<Posts>> getUserPosts() async {
+  Future getUserPosts() async {
     var url = Uri.parse(
         'https://graph.instagram.com/me/media?fields=id,username,timestamp,caption,media_type&access_token=$accessToken');
 
     final response = await http.get(url);
-    postsList = postsList1(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      postsList = postsList1(jsonDecode(response.body));
+      finalList = postsList;
+      print(finalList);
+      print(postsList[0].username);
+      print(response.statusCode);
+      return postsList;
+    }
+  }
 
-    return postsList;
+  Future<List<Posts>> getUserPostsResponse() async {
+    var url = Uri.parse(
+        'https://graph.instagram.com/me/media?fields=id,username,timestamp,caption,media_type&access_token=$accessToken');
+
+    final response = await http.get(url);
+
+    return postsList1(jsonDecode(response.body));
   }
 }

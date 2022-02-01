@@ -9,10 +9,6 @@ class InstaPostModel {
       : id = json["user_id"] ?? 0,
         accessToken = json["access_token"] ?? '',
         userName = json["username"] ?? '';
-
-  Map toJson() => {
-        'token': accessToken,
-      };
 }
 
 List<Posts> postsList1(Map<String, dynamic> json) =>
