@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:insta_post/insta_post_model.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const String urlAuth = 'https://api.instagram.com/oauth/authorize';
 const String appId = '645134416738143';
@@ -47,9 +47,13 @@ class InstaService {
     // final Map<String,dynamic> result = jsonDecode(response.body);
     accessToken =
         InstaPostModel.fromJson(jsonDecode(response.body)).accessToken;
-    print("$accessToken mmmmmmmmmmmmmmmmm");
 
     return accessToken;
+  }
+
+  void saveTokenToDevice() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', accessToken!);
   }
 
   Future<List<Posts>> getUserPosts() async {
@@ -57,17 +61,8 @@ class InstaService {
         'https://graph.instagram.com/me/media?fields=id,username,timestamp,caption,media_type&access_token=$accessToken');
 
     final response = await http.get(url);
-    if (response.statusCode == 200) {
-      postsList = postsList1(jsonDecode(response.body));
+    postsList = postsList1(jsonDecode(response.body));
 
-      //print(postsList[0].id);
-      // print(value);
-      // print(response.statusCode);
-      return postsList;
-    } else {
-      // print('error object');
-      // print(response.statusCode);
-      return postsList;
-    }
+    return postsList;
   }
 }

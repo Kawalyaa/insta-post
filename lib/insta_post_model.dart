@@ -3,22 +3,17 @@ class InstaPostModel {
   String accessToken;
   String userName;
 
-  // String profilePic;
-
   InstaPostModel(this.id, this.accessToken, this.userName);
 
   InstaPostModel.fromJson(Map<String, dynamic> json)
       : id = json["user_id"] ?? 0,
         accessToken = json["access_token"] ?? '',
         userName = json["username"] ?? '';
-}
 
-// class Data {
-//   List<Posts>? data;
-//   Data({this.data});
-//   factory Data.fromJson(Map<String, dynamic> json) => Data(
-//       data: List<Posts>.from(json["data"].map((dt) => Posts.formJson(dt))));
-// }
+  Map toJson() => {
+        'token': accessToken,
+      };
+}
 
 List<Posts> postsList1(Map<String, dynamic> json) =>
     List<Posts>.from(json["data"].map((dt) => Posts.formJson(dt)));
