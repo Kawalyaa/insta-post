@@ -58,11 +58,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             instaService.getAuth(uri);
                             instaService.getToken().then((token) async {
                               if (token != '') {
+                                await instaService.getUserPosts();
+
                                 await flutterWeb.close();
                                 await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => HomeScreen(
+                                              postsList: instaService.postsList,
                                               token: instaService.accessToken,
                                             )));
                               }

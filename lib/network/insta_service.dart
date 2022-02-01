@@ -54,11 +54,20 @@ class InstaService {
 
   Future<List<Posts>> getUserPosts() async {
     var url = Uri.parse(
-        'https://graph.instagram.com/me/media?fields=id,username,timestamp,caption,media_type,&access_token=$accessToken');
+        'https://graph.instagram.com/me/media?fields=id,username,timestamp,caption,media_type&access_token=$accessToken');
 
     final response = await http.get(url);
+    if (response.statusCode == 200) {
+      postsList = postsList1(jsonDecode(response.body));
 
-    postsList = Posts.formJson(jsonDecode(response.body)) as List<Posts>;
-    return postsList;
+      //print(postsList[0].id);
+      // print(value);
+      // print(response.statusCode);
+      return postsList;
+    } else {
+      // print('error object');
+      // print(response.statusCode);
+      return postsList;
+    }
   }
 }

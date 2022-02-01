@@ -13,8 +13,18 @@ class InstaPostModel {
         userName = json["username"] ?? '';
 }
 
+// class Data {
+//   List<Posts>? data;
+//   Data({this.data});
+//   factory Data.fromJson(Map<String, dynamic> json) => Data(
+//       data: List<Posts>.from(json["data"].map((dt) => Posts.formJson(dt))));
+// }
+
+List<Posts> postsList1(Map<String, dynamic> json) =>
+    List<Posts>.from(json["data"].map((dt) => Posts.formJson(dt)));
+
 class Posts {
-  int id;
+  String id;
   String mediaType;
   String caption;
   String username;
@@ -22,8 +32,8 @@ class Posts {
 
   Posts(this.id, this.mediaType, this.caption, this.timestamp, this.username);
 
-  Posts.formJson(Map<String, dynamic> json)
-      : id = json['id'] ?? 0,
+  Posts.formJson(Map json)
+      : id = json['id'] ?? '',
         mediaType = json['media_type'] ?? '',
         caption = json['caption'] ?? '',
         timestamp = json['timestamp'] ?? '',
