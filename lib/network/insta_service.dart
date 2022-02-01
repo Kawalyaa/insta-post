@@ -24,11 +24,11 @@ String uri =
     "https://api.instagram.com/oauth/authorize?client_id=645134416738143&redirect_uri=https://github.com/Kawalyaa&scope=user_profile,user_media&response_type=code";
 
 class InstaService {
+  String? name;
   String? authCode;
   String? accessToken;
   bool? hasCode;
   List<Posts> postsList = [];
-  List<Posts> finalList = [];
 
   void getAuth(String url) {
     //Convert auth code to string
@@ -64,20 +64,10 @@ class InstaService {
     final response = await http.get(url);
     if (response.statusCode == 200) {
       postsList = postsList1(jsonDecode(response.body));
-      finalList = postsList;
-      print(finalList);
+      name = postsList[0].username;
       print(postsList[0].username);
       print(response.statusCode);
-      return postsList;
     }
-  }
-
-  Future<List<Posts>> getUserPostsResponse() async {
-    var url = Uri.parse(
-        'https://graph.instagram.com/me/media?fields=id,username,timestamp,caption,media_type&access_token=$accessToken');
-
-    final response = await http.get(url);
-
-    return postsList1(jsonDecode(response.body));
+    return response.statusCode == 200 ? true : false;
   }
 }

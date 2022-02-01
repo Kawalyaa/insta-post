@@ -58,19 +58,26 @@ class _LoginScreenState extends State<LoginScreen> {
                             instaService.getAuth(uri);
                             instaService.getToken().then((token) async {
                               if (token != '') {
-                                await instaService.getUserPosts();
-
                                 await flutterWeb.close();
-                                await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomeScreen(
-                                              postsList: instaService.postsList,
-                                              token: instaService.accessToken,
-                                            )));
+
+                                await instaService
+                                    .getUserPosts()
+                                    .then((hasData) async {
+                                  if (hasData) {
+                                    await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => HomeScreen(
+                                                  postsList:
+                                                      instaService.postsList,
+                                                  token:
+                                                      instaService.accessToken,
+                                                )));
+                                  }
+                                });
                               }
                             });
-                          } else {}
+                          }
                         });
 
                         //await instaService.instaWebView(flutterWeb);
