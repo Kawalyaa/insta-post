@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:insta_post/network/insta_service.dart';
+import 'package:insta_post/screens/web_view.dart';
 
 import '../insta_post_theme.dart';
 import 'home_screen.dart';
@@ -13,11 +14,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  InstaService instaService = InstaService();
   FlutterWebviewPlugin flutterWeb = FlutterWebviewPlugin();
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -52,35 +53,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                        flutterWeb.launch(uri);
-                        flutterWeb.onUrlChanged.listen((uri) async {
-                          if (authUrl.contains(redirectUri)) {
-                            instaService.getAuth(uri);
-                            instaService.getToken().then((token) async {
-                              if (token != '') {
-                                await flutterWeb.close();
 
-                                await instaService
-                                    .getUserPosts()
-                                    .then((hasData) async {
-                                  if (hasData) {
-                                    await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => HomeScreen(
-                                                  postsList:
-                                                      instaService.postsList,
-                                                  token:
-                                                      instaService.accessToken,
-                                                )));
-                                  }
-                                });
-                              }
-                            });
-                          }
-                        });
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const WebView(
 
-                        //await instaService.instaWebView(flutterWeb);
+                                )));
                       },
                       child: Image.asset(
                         'assets/instagram.png',
@@ -95,4 +74,19 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ));
   }
+
+
+
 }
+
+
+// MaterialApp(
+// routes: {
+// "/": (_) => new WebviewScaffold(
+// url: "https://www.google.com",
+// appBar: new AppBar(
+// title: new Text("Widget webview"),
+// ),
+// ),
+// },
+// );

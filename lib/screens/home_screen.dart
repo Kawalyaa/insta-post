@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:insta_post/insta_post_theme.dart';
 import 'package:insta_post/network/insta_service.dart';
 
 import '../insta_post_model.dart';
 import '../posts_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String? token;
-  final List<Posts>? postsList;
+  final List<Post>? postList;
 
-  const HomeScreen({this.token, this.postsList, Key? key}) : super(key: key);
+
+  const HomeScreen({ this.postList,Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -18,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    InstaService().getUserPosts();
   }
 
   @override
@@ -31,14 +31,37 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SafeArea(
             child: Padding(
           padding: const EdgeInsets.all(18.0),
-          child: ListView.builder(
-            itemCount: instaService.postsList.length,
-            itemBuilder: (context, index) => PostCard(
-                mediaType: instaService.postsList[index].mediaType,
-                username: instaService.postsList[index].username,
-                caption: instaService.postsList[index].caption,
-                timestamp: instaService.postsList[index].timestamp),
+          child:ListView.builder(
+            itemCount: widget.postList?.length,
+            itemBuilder: (context, index) =>  PostCard(
+                mediaType: widget.postList![index].mediaType,
+                username: widget.postList![index].username,
+                caption: widget.postList![index].caption,
+                timestamp:widget.postList![index].timestamp),
           ),
         )));
   }
 }
+
+
+// FutureBuilder<List<Post>>(
+// future: instaService.getUserPosts(),
+// builder: (context, snapshot) {
+// if (snapshot.data==null) {
+// return Center(child: Text('Error has Occurred....',style: InstaPostTheme.lightTextTheme.headline4,),);
+//
+// }
+// else if (snapshot.connectionState==ConnectionState.waiting) {
+// return Center(child: Text('waiting....',style: InstaPostTheme.lightTextTheme.headline4,),);
+// }
+// List<Post> ?posts = snapshot.data!;
+// return ListView.builder(
+// itemCount: snapshot.data!.length,
+// itemBuilder: (context, index) =>  PostCard(
+// mediaType: posts[index].mediaType,
+// username: posts[index].username,
+// caption: posts[index].caption,
+// timestamp:posts[index].timestamp),
+// );
+// }
+// )

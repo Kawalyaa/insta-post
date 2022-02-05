@@ -30,7 +30,7 @@ class PostCard extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              Image.asset(
+              Image.network(
                 mediaType!,
                 width: double.infinity,
                 height: 200.0,
