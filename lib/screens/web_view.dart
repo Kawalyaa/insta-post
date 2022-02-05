@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
+import '../constants.dart';
 import '../network/insta_service.dart';
 import 'home_screen.dart';
 
@@ -29,6 +30,7 @@ class WebView extends StatelessWidget {
         instaService.getAuth(uri);
         instaService.getToken().then((token) async {
           if (token != '') {
+           instaService.saveTokenToDevice();
             await webView.close();
 
             await instaService.getUserPosts().then((value) async {

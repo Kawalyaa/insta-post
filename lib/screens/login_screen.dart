@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:insta_post/network/insta_service.dart';
 import 'package:insta_post/screens/web_view.dart';
 
 import '../insta_post_theme.dart';
-import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -78,15 +76,3 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 }
-
-
-// MaterialApp(
-// routes: {
-// "/": (_) => new WebviewScaffold(
-// url: "https://www.google.com",
-// appBar: new AppBar(
-// title: new Text("Widget webview"),
-// ),
-// ),
-// },
-// );

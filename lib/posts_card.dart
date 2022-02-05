@@ -23,6 +23,7 @@ class PostCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
+
           elevation: 0,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +34,7 @@ class PostCard extends StatelessWidget {
               Image.network(
                 mediaUrl!,
                 width: double.infinity,
-                height: 200.0,
+                height: 300.0,
                 fit: BoxFit.cover,
               ),
               Row(

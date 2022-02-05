@@ -4,24 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:insta_post/insta_post_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const String urlAuth = 'https://api.instagram.com/oauth/authorize';
-const String appId = '645134416738143';
-const String appKey = '138986e104f2403f3cd951d0412f46f8';
-const String redirectUri = 'https://github.com/Kawalyaa';
-const String responseType = 'code';
-const scope = 'user_profile,user_media';
-String authUrl = urlAuth +
-    '?client_id=' +
-    appId +
-    '&redirect_uri=' +
-    redirectUri +
-    '&scope=' +
-    scope +
-    'response_type=' +
-    responseType;
+import '../constants.dart';
 
-String uri =
-    "https://api.instagram.com/oauth/authorize?client_id=645134416738143&redirect_uri=https://github.com/Kawalyaa&scope=user_profile,user_media&response_type=code";
 
 class InstaService {
   String? name;
@@ -56,6 +40,7 @@ class InstaService {
     await prefs.setString('token', accessToken!);
   }
 
+
   Future<List<Post>> getUserPosts() async {
     var url = Uri.parse(
         'https://graph.instagram.com/me/media?fields=id,username,timestamp,caption,media_url&access_token=$accessToken');
@@ -64,10 +49,6 @@ class InstaService {
     Map<String,dynamic> data = jsonDecode(response.body);
     List<Post> postsList
     =  Posts.formJson(data).postList!.toList();
-      print(postsList[0].username);
-    print(postsList[0].username);
-
-    print(response.statusCode);
 
     return postsList;
   }
