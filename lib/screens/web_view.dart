@@ -38,7 +38,8 @@ class WebView extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => HomeScreen(
-                            postList: value,
+                        ///Take only 7 posts
+                            postList: value.take(7).toList(),
                           )));
             });
           }
