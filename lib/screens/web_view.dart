@@ -14,14 +14,16 @@ class WebView extends StatelessWidget {
 
     returnToPosts(webPlugin, instaService, context);
 
-    return WebviewScaffold(url: uri,appBar: AppBar(
-      title: const Text('Insta Post'),
-    ) ,);
+    return WebviewScaffold(
+      url: uri,
+      appBar: AppBar(
+        title: const Text('Insta Post'),
+      ),
+    );
   }
 
-
-  Future<void> returnToPosts(FlutterWebviewPlugin webView,InstaService instaService,BuildContext context)async{
-
+  Future<void> returnToPosts(FlutterWebviewPlugin webView,
+      InstaService instaService, BuildContext context) async {
     webView.onUrlChanged.listen((uri) async {
       if (uri.contains(redirectUri)) {
         instaService.getAuth(uri);
@@ -29,24 +31,17 @@ class WebView extends StatelessWidget {
           if (token != '') {
             await webView.close();
 
-            await instaService
-                .getUserPosts().then((value) async{
+            await instaService.getUserPosts().then((value) async {
               await Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>  HomeScreen(
-postList: value,
-                      )));
+                      builder: (context) => HomeScreen(
+                            postList: value,
+                          )));
             });
-
           }
-        }
-        );
+        });
       }
     });
-
-
-
   }
-
 }

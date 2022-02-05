@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child:ListView.builder(
             itemCount: widget.postList?.length,
             itemBuilder: (context, index) =>  PostCard(
-                mediaType: widget.postList![index].mediaType,
+                mediaUrl: widget.postList![index].mediaUrl,
                 username: widget.postList![index].username,
                 caption: widget.postList![index].caption,
                 timestamp:widget.postList![index].timestamp),

@@ -5,13 +5,13 @@ import 'insta_post_theme.dart';
 
 class PostCard extends StatelessWidget {
   final String? id;
-  final String? mediaType;
+  final String? mediaUrl;
   final String? caption;
   final String? username;
   final String? timestamp;
   const PostCard(
       {this.id,
-      this.mediaType,
+      this.mediaUrl,
       this.username,
       this.timestamp,
       this.caption,
@@ -31,7 +31,7 @@ class PostCard extends StatelessWidget {
                 height: 8,
               ),
               Image.network(
-                mediaType!,
+                mediaUrl!,
                 width: double.infinity,
                 height: 200.0,
                 fit: BoxFit.cover,

@@ -29,16 +29,16 @@ class Posts {
 
 class Post {
   String ?id;
-  String? mediaType;
+  String? mediaUrl;
   String ?caption;
   String? username;
   String ?timestamp;
 
-  Post({this.id, this.mediaType, this.caption, this.timestamp, this.username});
+  Post({this.id, this.mediaUrl, this.caption, this.timestamp, this.username});
 
   factory Post.formJson(Map<String,dynamic> json){
     return Post(id: json['id'] ?? '',
-        mediaType: json['media_type'] ?? '',
+        mediaUrl: json['media_url'] ?? '',
         caption: json['caption'] ?? '',
         timestamp: json['timestamp'] ?? '',
         username: json['username'] ?? '');

@@ -58,7 +58,7 @@ class InstaService {
 
   Future<List<Post>> getUserPosts() async {
     var url = Uri.parse(
-        'https://graph.instagram.com/me/media?fields=id,username,timestamp,caption,media_type&access_token=$accessToken');
+        'https://graph.instagram.com/me/media?fields=id,username,timestamp,caption,media_url&access_token=$accessToken');
 
     final response = await http.get(url);
     Map<String,dynamic> data = jsonDecode(response.body);
